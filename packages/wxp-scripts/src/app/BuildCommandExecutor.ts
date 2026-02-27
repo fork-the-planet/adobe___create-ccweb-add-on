@@ -93,9 +93,9 @@ export class BuildCommandExecutor implements CommandExecutor<BuildCommandOptions
      */
     private async _validateSWCDependencies(): Promise<void> {
         const packageJsonPath = path.join(process.cwd(), "package.json");
-        /*if (!fs.existsSync(packageJsonPath)) {
+        if (!fs.existsSync(packageJsonPath)) {
             return;
-        }*/
+        }
         const packageJson = await fs.readJson(packageJsonPath);
         const dependencies = { ...(packageJson.dependencies || {}), ...(packageJson.devDependencies || {}) } as Record<
             string,

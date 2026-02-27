@@ -780,10 +780,6 @@ export declare class Editor {
      */
     get context(): Context;
     /**
-     * @returns the root of the document.
-     */
-    get documentRoot(): BaseNode;
-    /**
      * @returns an ellipse node with default x/y radii, a black fill, and no initial stroke.
      * Transform values default to 0.
      */
@@ -958,6 +954,9 @@ export declare class ExpressContext extends Context {
  */
 export declare class ExpressEditor extends Editor {
     get context(): ExpressContext;
+    /**
+     * @returns the root of the document.
+     */
     get documentRoot(): ExpressRootNode;
 }
 
