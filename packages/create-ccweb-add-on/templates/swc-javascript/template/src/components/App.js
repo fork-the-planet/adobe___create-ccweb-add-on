@@ -33,7 +33,7 @@ export class App extends LitElement {
     render() {
         // Please note that the below "<sp-theme>" component does not react to theme changes in Express.
         // You may use "this.addOnUISdk.app.ui.theme" to get the current theme and react accordingly.
-        return html` <sp-theme system="express" scale="medium" color="light">
+        return html` <sp-theme system="express" color="light" scale="medium">
             <div class="container">
                 <sp-button size="m" @click=${this._handleClick}>${this._buttonLabel}</sp-button>
             </div>
