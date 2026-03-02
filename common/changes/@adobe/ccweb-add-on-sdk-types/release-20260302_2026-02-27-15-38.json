@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@adobe/ccweb-add-on-sdk-types",
-      "comment": "introduce R&A entrypoint and spectrum 2 changes",
+      "comment": "introduce R&A entrypoint and some improvements",
       "type": "minor"
     }
   ],
