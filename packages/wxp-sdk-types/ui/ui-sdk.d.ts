@@ -421,7 +421,8 @@ export declare enum AuthorizationStatus {
     POPUP_CLOSED = "POPUP_CLOSED",
     POPUP_TIMEOUT = "POPUP_TIMEOUT",
     FAILED = "FAILED",
-    IFRAME_LOAD_FAILED = "IFRAME_LOAD_FAILED"
+    IFRAME_LOAD_FAILED = "IFRAME_LOAD_FAILED",
+    RESTRICTED_CLIENT_ID = "RESTRICTED_CLIENT_ID"
 }
 
 /**
@@ -715,6 +716,7 @@ declare namespace Constants {
         PlatformType,
         ColorPickerPlacement,
         FileSizeLimitUnit,
+        SizeUnit,
         AuthorizationStatus
     };
 }
@@ -1148,6 +1150,10 @@ export declare enum EntrypointType {
      */
     MOBILE_SHARE = "mobile.share",
     /**
+     * Review and approval entrypoint type.
+     */
+    REVIEW_AND_APPROVAL = "review-and-approval",
+    /**
      * Schedule entrypoint type.
      */
     SCHEDULE = "schedule",
@@ -1545,6 +1551,11 @@ export declare interface PageMetadata {
      */
     hasAnimatedContent: boolean;
     /**
+     * Page size in units
+     * NOTE: This size is same as seen in UI in Resize Panel.
+     */
+    sizeInUnits: PageSizeInUnits;
+    /**
      * The page's background color in ARGB format (32-bit integer)
      */
     backgroundARGB?: number;
@@ -1584,6 +1595,25 @@ export declare interface PageRendition extends Rendition {
      * Page metadata
      */
     metadata: PageMetadata;
+}
+
+/**
+ * Represents the size of the page in units.
+ * NOTE: This size is same as seen in UI in Resize Panel.
+ */
+export declare interface PageSizeInUnits {
+    /**
+     * Width of the page in units
+     */
+    width: number;
+    /**
+     * Height of the page in units
+     */
+    height: number;
+    /**
+     * Unit of the page size
+     */
+    unit: SizeUnit;
 }
 
 /**
@@ -2034,6 +2064,28 @@ export declare interface SearchAction extends PanelAction {
 }
 
 export declare type SimpleDialogOptions = AlertDialogOptions | InputDialogOptions;
+
+/**
+ * Units for the page size
+ */
+export declare enum SizeUnit {
+    /**
+     * Pixel
+     */
+    pixel = "px",
+    /**
+     * Centimeter
+     */
+    centimeter = "cm",
+    /**
+     * Millimeter
+     */
+    millimeter = "mm",
+    /**
+     * Inch
+     */
+    inch = "in"
+}
 
 /**
  * Mime type details for importing media

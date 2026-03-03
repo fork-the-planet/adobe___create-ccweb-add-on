@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@adobe/create-ccweb-add-on",
+      "comment": "introduce R&A entrypoint and some improvements",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@adobe/create-ccweb-add-on"
+}

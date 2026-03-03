@@ -185,6 +185,10 @@ export enum EntrypointType {
      */
     MOBILE_SHARE = "mobile.share",
     /**
+     * Review and approval entrypoint type.
+     */
+    REVIEW_AND_APPROVAL = "review-and-approval",
+    /**
      * Schedule entrypoint type.
      */
     SCHEDULE = "schedule",

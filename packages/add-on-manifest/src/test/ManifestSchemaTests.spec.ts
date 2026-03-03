@@ -750,6 +750,7 @@ describe("ManifestSchema Validations - Version 2", () => {
             "panel",
             "mobile.media.audio",
             "mobile.your-stuff.files",
+            "review-and-approval",
             "contextual.replace",
             "contextual.upload",
             "contextual.bulk-create"
