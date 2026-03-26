@@ -573,11 +573,6 @@ export declare class ColorUtils {
 export declare const colorUtils: ExpressColorUtilsWrapper;
 
 /**
- * <InlineAlert slots="text" variant="warning"/>
- *
- * **IMPORTANT:** This is currently ***experimental only*** and should not be used in any add-ons you will be distributing until it has been declared stable. To use it, you will first need to set the `experimentalApis` flag to `true` in the [`requirements`](../../../manifest/index.md#requirements) section of the `manifest.json`.
- *
- * @experimental
  * An interface for arbitrary resize operations regardless of whether given a width or height when using {@link Node.resize}.
  */
 declare interface CommonResizeOptions {
@@ -1445,7 +1440,36 @@ export declare class MediaContainerNode extends Node implements IMediaContainerN
      * different shape via this API.
      */
     get maskShape(): FillableNode;
+    /**
+     * Replace original media while preserving the existing filter effects. Any generative fill modifications will be removed.
+     * Crop settings are not preserved.
+     * @param media - New content to display. Currently must be a {@link BitmapImage}.
+     */
     replaceMedia(media: BitmapImage): void;
+    /**
+     * <InlineAlert slots="text" variant="warning"/>
+     *
+     * **IMPORTANT:** This is currently ***experimental only*** and should not be used in any add-ons you will be distributing until it has been declared stable. To use it, you will first need to set the `experimentalApis` flag to `true` in the [`requirements`](../../../manifest/index.md#requirements) section of the `manifest.json`.
+     *
+     * @experimental
+     * Replace the current media with an edited version of the same media while preserving existing filter effects,
+     * per-element metadata, and asset provenance.
+     *
+     * Use this when the new blob is a modified version of the current image (e.g., an edited,
+     * recolored, or upscaled variant) rather than a completely unrelated image.
+     *
+     * The original per-element metadata (i.e., node.addOnData) and provenance (including attribution IDs, author
+     * information, source information such as Adobe Stock) are preserved.
+     *
+     * If the new image has the same aspect ratio as the original, the previous image’s crop settings
+     * remain unchanged.
+     *
+     * @param blob - A blob containing the transformed bitmap derived from the current media.
+     * @param options.preserveCutoutFilter - If true, preserves the existing cutout filter from
+     * the current media.
+     * @throws If the current media has been generated or modified by generative AI.
+     */
+    replaceMediaWithEditedImage(blob: Blob, options: ReplaceMediaWithEditedImageOptions): Promise<void>;
 }
 
 /**
@@ -1573,11 +1597,6 @@ declare class Node extends VisualNode implements INodeBounds {
     get blendMode(): BlendMode;
     set blendMode(value: BlendMode);
     /**
-     * <InlineAlert slots="text" variant="warning"/>
-     *
-     * **IMPORTANT:** This is currently ***experimental only*** and should not be used in any add-ons you will be distributing until it has been declared stable. To use it, you will first need to set the `experimentalApis` flag to `true` in the [`requirements`](../../../manifest/index.md#requirements) section of the `manifest.json`.
-     *
-     * @experimental
      * Resizes this node based on the given {@link ResizeOptions}.
      */
     resize(options: ResizeOptions): void;
@@ -1960,6 +1979,14 @@ declare interface RemoveListStyleInput extends BaseParagraphListStyle {
  * **IMPORTANT:** This is currently ***experimental only*** and should not be used in any add-ons you will be distributing until it has been declared stable. To use it, you will first need to set the `experimentalApis` flag to `true` in the [`requirements`](../../../manifest/index.md#requirements) section of the `manifest.json`.
  *
  * @experimental
+ * Options for {@link MediaContainerNode.replaceMediaWithEditedImage}.
+ */
+export declare interface ReplaceMediaWithEditedImageOptions {
+    /** If true, preserves the existing cutout filter from the current media. */
+    preserveCutoutFilter: boolean;
+}
+
+/**
  * An interface for rescaling the node based on a given height when using {@link Node.resize}.
  */
 declare interface RescaleProportionalToHeightOptions extends CommonResizeOptions {
@@ -1970,11 +1997,6 @@ declare interface RescaleProportionalToHeightOptions extends CommonResizeOptions
 }
 
 /**
- * <InlineAlert slots="text" variant="warning"/>
- *
- * **IMPORTANT:** This is currently ***experimental only*** and should not be used in any add-ons you will be distributing until it has been declared stable. To use it, you will first need to set the `experimentalApis` flag to `true` in the [`requirements`](../../../manifest/index.md#requirements) section of the `manifest.json`.
- *
- * @experimental
  * An interface for rescaling the node based on a given width when using {@link Node.resize}.
  */
 declare interface RescaleProportionalToWidthOptions extends CommonResizeOptions {
@@ -1985,11 +2007,6 @@ declare interface RescaleProportionalToWidthOptions extends CommonResizeOptions 
 }
 
 /**
- * <InlineAlert slots="text" variant="warning"/>
- *
- * **IMPORTANT:** This is currently ***experimental only*** and should not be used in any add-ons you will be distributing until it has been declared stable. To use it, you will first need to set the `experimentalApis` flag to `true` in the [`requirements`](../../../manifest/index.md#requirements) section of the `manifest.json`.
- *
- * @experimental
  * An enum for controlling the behavior of {@link Node.resize}.
  */
 export declare enum ResizeBehavior {
@@ -2013,11 +2030,6 @@ export declare enum ResizeBehavior {
 }
 
 /**
- * <InlineAlert slots="text" variant="warning"/>
- *
- * **IMPORTANT:** This is currently ***experimental only*** and should not be used in any add-ons you will be distributing until it has been declared stable. To use it, you will first need to set the `experimentalApis` flag to `true` in the [`requirements`](../../../manifest/index.md#requirements) section of the `manifest.json`.
- *
- * @experimental
  * A type union for providing the necessary arguments to {@link Node.resize}.
  *
  * Note that some nodes only support proportional resizing. In some cases this is always true (e.g. images) while in
@@ -2030,11 +2042,6 @@ export declare type ResizeOptions =
     | ResizeUsingHeightOptions;
 
 /**
- * <InlineAlert slots="text" variant="warning"/>
- *
- * **IMPORTANT:** This is currently ***experimental only*** and should not be used in any add-ons you will be distributing until it has been declared stable. To use it, you will first need to set the `experimentalApis` flag to `true` in the [`requirements`](../../../manifest/index.md#requirements) section of the `manifest.json`.
- *
- * @experimental
  * An interface for resizing the node based on a given height when using {@link Node.resize}.
  */
 declare interface ResizeUsingHeightOptions extends CommonResizeOptions {
@@ -2045,11 +2052,6 @@ declare interface ResizeUsingHeightOptions extends CommonResizeOptions {
 }
 
 /**
- * <InlineAlert slots="text" variant="warning"/>
- *
- * **IMPORTANT:** This is currently ***experimental only*** and should not be used in any add-ons you will be distributing until it has been declared stable. To use it, you will first need to set the `experimentalApis` flag to `true` in the [`requirements`](../../../manifest/index.md#requirements) section of the `manifest.json`.
- *
- * @experimental
  * An interface for resizing the node based on a given width when using {@link Node.resize}.
  */
 declare interface ResizeUsingWidthOptions extends CommonResizeOptions {

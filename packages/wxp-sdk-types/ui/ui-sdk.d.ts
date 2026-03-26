@@ -889,6 +889,11 @@ export declare type DisableDragToDocument = () => void;
  */
 declare interface Document_2 {
     /**
+     * @experimental - Experimental API
+     * Review and Approval workflow
+     */
+    readonly reviewAndApproval: ReviewAndApproval;
+    /**
      * Add image/PSD/AI/SVG assets to the current page
      */
     addImage(blob: Blob, attributes?: MediaAttributes, importAddOnData?: ImportAddOnData): Promise<void>;
@@ -1977,6 +1982,13 @@ export declare interface RenditionOptions extends RangeOptions {
 }
 
 /**
+ * Rendition options for review asset export.
+ * Mirrors the service-side RenditionOptions for Review and Approval workflow — no page range, full document only.
+ * @experimental - Experimental interface
+ */
+export declare interface RenditionOptionsReviewAndApproval extends Omit<RenditionOptions, "range" | "pageIds"> {}
+
+/**
  * Rendition Type
  */
 export declare enum RenditionType {
@@ -1984,6 +1996,43 @@ export declare enum RenditionType {
      * Rendition of the whole page
      */
     page = "page"
+}
+
+/**
+ * Interface for Review and Approval workflow operations
+ * @experimental - Experimental API
+ */
+export declare interface ReviewAndApproval {
+    /**
+     * Sets the template review configuration
+     * @param options - Configuration options for template review
+     * @returns Promise resolving to the configuration response
+     */
+    setTemplateReviewConfig(options: SetTemplateReviewConfigOptions): Promise<void>;
+    /**
+     * Deletes the template review configuration
+     * @returns Promise that resolves when configuration is deleted
+     */
+    deleteTemplateReviewConfig(): Promise<void>;
+    /**
+     * Starts a review request
+     * @param options - Options for the review request
+     * @returns Promise resolving to the review request response
+     */
+    startReviewRequest(options: StartReviewRequestOptions): Promise<StartReviewRequestResponse>;
+    /**
+     * Cancels an ongoing review request
+     * @returns Promise that resolves when request is cancelled
+     */
+    cancelReviewRequest(): Promise<void>;
+}
+
+export declare enum ReviewStatus {
+    REVIEW_NOT_STARTED = "REVIEW_NOT_STARTED",
+    REVIEW_REQUESTED_IN_PROGRESS = "REVIEW_REQUESTED_IN_PROGRESS",
+    REVIEW_REQUESTED = "REVIEW_REQUESTED",
+    AUTHOR_RE_EDIT = "AUTHOR_RE_EDIT",
+    APPROVED = "APPROVED"
 }
 
 export declare interface Runtime {
@@ -2063,6 +2112,15 @@ export declare interface SearchAction extends PanelAction {
     searchString: string;
 }
 
+/**
+ * Options for setting template review configuration
+ * @experimental - Experimental interface
+ */
+export declare interface SetTemplateReviewConfigOptions {
+    /** Review Workflow ID to configure */
+    reviewWorkflowId: string;
+}
+
 export declare type SimpleDialogOptions = AlertDialogOptions | InputDialogOptions;
 
 /**
@@ -2095,6 +2153,35 @@ export declare interface SourceMimeTypeInfo {
      * Mime type of the source asset
      */
     sourceMimeType?: SupportedMimeTypes;
+}
+
+/**
+ * Options for starting a review request
+ * @experimental - Experimental interface
+ */
+export declare interface StartReviewRequestOptions {
+    /**
+     * Add-on's unique identifier for this review.
+     * Add-on generates this UUID to correlate with their external system.
+     */
+    reviewRequestId: string;
+    /** Rendition options specifying format for exporting review assets */
+    renditionOptions: RenditionOptionsReviewAndApproval;
+}
+
+/**
+ * Response from starting a review request
+ * @experimental - Experimental interface
+ */
+export declare interface StartReviewRequestResponse {
+    /** URL for the add-on to POST review decisions to */
+    decisionSubmissionWebhookUrl: string;
+    /** ID of the document in the review workflow */
+    documentId: string;
+    /** Status after operation */
+    status: ReviewStatus;
+    /** Exported renditions of the document for review */
+    renditions: Blob[];
 }
 
 export declare enum SupportedMimeTypes {
