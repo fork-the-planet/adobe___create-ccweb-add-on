@@ -175,7 +175,12 @@ export declare enum AppEvent {
     /**
      * triggered when the document's export permission status changes in review and approval workflow.
      */
-    documentExportAllowedChange = "documentExportAllowedChange"
+    documentExportAllowedChange = "documentExportAllowedChange",
+
+    /**
+     * triggered when the host delivers review settings (or related) updates to the add-on.
+     */
+    updateReviewSettings = "updateReviewSettings"
 }
 
 export declare type AppEventHandlerType<Event extends AppEventType> = (data: AppEventsTypeMap[Event]) => void;
@@ -197,6 +202,9 @@ declare interface AppEventsTypeMap {
     [AppEvent.documentPublishedLinkAvailable]: DocumentPublishedLinkAvailableEventData;
     [AppEvent.documentTitleChange]: DocumentTitleChangeEventData;
     [AppEvent.documentExportAllowedChange]: DocumentExportAllowedChangeEventData;
+
+    /** Delivered when the host sends review settings (or related) updates to the add-on. */
+    [AppEvent.updateReviewSettings]: undefined;
 }
 
 export declare type AppEventType = keyof AppEventsTypeMap & string;
@@ -889,7 +897,6 @@ export declare type DisableDragToDocument = () => void;
  */
 declare interface Document_2 {
     /**
-     * @experimental - Experimental API
      * Review and Approval workflow
      */
     readonly reviewAndApproval: ReviewAndApproval;
@@ -1984,7 +1991,6 @@ export declare interface RenditionOptions extends RangeOptions {
 /**
  * Rendition options for review asset export.
  * Mirrors the service-side RenditionOptions for Review and Approval workflow — no page range, full document only.
- * @experimental - Experimental interface
  */
 export declare interface RenditionOptionsReviewAndApproval extends Omit<RenditionOptions, "range" | "pageIds"> {}
 
@@ -2000,7 +2006,6 @@ export declare enum RenditionType {
 
 /**
  * Interface for Review and Approval workflow operations
- * @experimental - Experimental API
  */
 export declare interface ReviewAndApproval {
     /**
@@ -2025,6 +2030,11 @@ export declare interface ReviewAndApproval {
      * @returns Promise that resolves when request is cancelled
      */
     cancelReviewRequest(): Promise<void>;
+    /**
+     * Completes an ongoing 3P add-on review request, hides any blocking progress modal, and reloads the document
+     * @returns Promise that resolves when the 3P add-on review is marked complete
+     */
+    completeReviewRequest(): Promise<void>;
 }
 
 export declare enum ReviewStatus {
@@ -2114,7 +2124,6 @@ export declare interface SearchAction extends PanelAction {
 
 /**
  * Options for setting template review configuration
- * @experimental - Experimental interface
  */
 export declare interface SetTemplateReviewConfigOptions {
     /** Review Workflow ID to configure */
@@ -2157,7 +2166,6 @@ export declare interface SourceMimeTypeInfo {
 
 /**
  * Options for starting a review request
- * @experimental - Experimental interface
  */
 export declare interface StartReviewRequestOptions {
     /**
@@ -2171,7 +2179,6 @@ export declare interface StartReviewRequestOptions {
 
 /**
  * Response from starting a review request
- * @experimental - Experimental interface
  */
 export declare interface StartReviewRequestResponse {
     /** URL for the add-on to POST review decisions to */
