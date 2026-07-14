@@ -934,7 +934,6 @@ declare interface Document_2 {
      */
     id(): Promise<string | undefined>;
     /**
-     * @experimental - Experimental API
      * Get document Link and Published document Link
      */
     link(options: LinkOptions): Promise<string | undefined>;
@@ -1348,7 +1347,6 @@ export declare interface JpgRenditionOptions extends RenditionOptions {
 }
 
 /**
- * @experimental - Experimental API
  * Link options for document link
  */
 export declare enum LinkOptions {
@@ -2031,7 +2029,7 @@ export declare interface ReviewAndApproval {
      */
     cancelReviewRequest(): Promise<void>;
     /**
-     * Completes an ongoing 3P add-on review request, hides any blocking progress modal, and reloads the document
+     * Marks the ongoing review request as complete, transitioning the document out of review state
      * @returns Promise that resolves when the 3P add-on review is marked complete
      */
     completeReviewRequest(): Promise<void>;
